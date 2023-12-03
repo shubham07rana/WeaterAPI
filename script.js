@@ -1,123 +1,108 @@
-function handleLocationError(error) {
-    console.error(`Error getting user location: ${error.message}`);
+const apiKey = "39c6f0ed474873c6fcaffada66148daa";
+const FetchbuttonRef = document.getElementById("button");
+const latilongiRef = document.querySelector("#text3");
+const detail = document.getElementById("box");
+const MapBoxRef = document.getElementById("MapBox");
+
+function latitude_Longitude(latitude, longitude) {
+  latilongiRef.innerHTML = `<span id="latgap" class="location-info-item">Lat: ${latitude.toFixed(6)}</span> <span id="longgap" class="location-info-item">Long: ${longitude.toFixed(6)}</span>`;
+  MapBoxRef.src = `https://maps.google.com/maps?q=${latitude}, ${longitude}&output=embed`;
 }
 
-function getCardinalDirection(degrees) {
-    if (typeof degrees === 'number') {
-        const directions = ['North', 'North East', 'East', 'South East', 'South', 'South West', 'West', 'North West'];
-        const index = Math.round(degrees / 45) % 8;
-        return directions[index];
-    } else {
-        return 'Unknown';
-    }
+async function currentWeather(latitude, longitude) {
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+  try {
+    const response = await fetch(url);
+    const result = await response.json();
+    console.log(result);
+    DisplayData(result);
+  } catch (error) {
+    console.log(error);
+    alert("Check Console for Error");
+  }
 }
 
-// Functions specific to index.html
+function DisplayData(result) {
+  const locationName = result.name;
+  const speed = Math.round(result.wind.speed * 3.6);
+  const humidity = result.main.humidity;
+  const time = secondsToTimeZoneString(result.timezone);
+  const pressure = Math.round(result.main.pressure / 1013.25);
+  const direction = degreeToDirection(result.wind.deg);
+  const temp = Math.round(result.main.temp - 273.15);
+  detail.innerHTML = `<div id="data">
+  <p>Location: ${locationName}</p>
+</div>
+<div id="data">
+  <p>Wind Speed: ${speed}kmph</p>
+</div>
+<div id="data">
+  <p>Humidity : ${humidity}</p>
+</div>
+<div id="data">
+  <p>Time Zone : GMT ${time.sign}${time.hours}:${time.minutes}</p>
+</div>
+<div id="data">
+  <p>Pressure: ${ pressure} Bar</p>
+</div>
+<div id="data">
+  <p>Wind Direction : ${direction}</p>
+</div>
+<div id="data">
+  <p>UV Index : ${500}</p>
+</div>
+<div id="data">
+  <p>Feels like: ${temp}</p>
+</div>`;
+}
 
-const fetchDataBtn = document.getElementById('fetchDataBtn');
+function secondsToTimeZoneString(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  const sign = hours >= 0 ? '+' : '-';
+  return {sign, hours: Math.abs(hours), minutes, seconds: remainingSeconds };
+}
 
-if (fetchDataBtn) {
-    fetchDataBtn.addEventListener('click', () => {
-        // Redirect to the weather page
-        window.location.href = 'weather.html';
+function degreeToDirection(degree) {
+  if (degree >= 337.5 || degree < 22.5) {
+    return "North";
+  } else if (degree >= 22.5 && degree < 67.5) {
+    return "North East";
+  } else if (degree >= 67.5 && degree < 112.5) {
+    return "East";
+  } else if (degree >= 112.5 && degree < 157.5) {
+    return "South East";
+  } else if (degree >= 157.5 && degree < 202.5) {
+    return "South";
+  } else if (degree >= 202.5 && degree < 247.5) {
+    return "South West";
+  } else if (degree >= 247.5 && degree < 292.5) {
+    return "West";
+  } else {
+    return "North West";
+  }
+}
+
+function getLocation() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      latitude_Longitude(latitude, longitude);
+      currentWeather(latitude, longitude);
     });
+  } else {
+    alert("Geolocation is not supported in this browser.");
+  }
 }
 
-// Functions specific to weather.html
-
-const locationInfoElement = document.getElementById('locationInfo');
-const mapElement = document.getElementById('map');
-const weatherDataElement = document.getElementById('weatherData');
-
-if (locationInfoElement && mapElement && weatherDataElement) {
-    // Example: Fetch user's location and display map
-    function fetchLocationAndDisplayMap() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showMap, handleLocationError);
-        } else {
-            console.error("Geolocation is not supported by this browser.");
-        }
-    }
-
-    function showMap(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        mapElement.innerHTML = `<iframe
-            width="100%"
-            height="500"
-            frameborder="0"
-            scrolling="no"
-            marginheight="0"
-            marginwidth="0"
-            src="https://maps.google.com/maps?q=${latitude},${longitude}&output=embed">
-        </iframe>`;
-
-        // Update latitude and longitude in the locationInfo element
-        document.getElementById('latitude').textContent = `Latitude: ${latitude.toFixed(6)}`;
-        document.getElementById('longitude').textContent = `Longitude: ${longitude.toFixed(6)}`;
-
-        // Show the locationInfo element
-        document.getElementById('locationInfo').classList.remove('hidden');
-
-        // Fetch weather data
-        fetchWeatherData(latitude, longitude);
-    }
-
-    // Call the function to fetch location and display the map
-    fetchLocationAndDisplayMap();
-}
-
-// Additional weather-related functionality goes here
-
-// Example: Fetching weather data
-function fetchWeatherData(latitude, longitude) {
-    // Replace the following API key with your Weatherstack API key
-    const apiKey = 'f356044ebb1fd76e30c491e112eb5093';
-    const apiUrl = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${latitude},${longitude}`;
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            console.log("Weatherstack API Response:", data);
-            displayWeatherData(data);
-        })
-        .catch(error => console.error(`Error fetching weather data: ${error.message}`));
-}
-
-// Example: Displaying weather data
-function displayWeatherData(data) {
-    if (data && data.current) {
-        const location = data.location.name;
-        const temperature = data.current.temperature;
-        const description = data.current.weather_descriptions[0];
-        const windSpeed = data.current.wind_speed;
-        const humidity = data.current.humidity;
-        const pressure = data.current.pressure;
-        const windDirection = getCardinalDirection(data.current.wind_degree);
-        const uvIndex = data.current.uv_index;
-        const timeZone = data.location.timezone_id;
-
-        const currentDate = new Date();
-        const currentTime = currentDate.toLocaleTimeString();
-
-        weatherDataElement.innerHTML = `
-            <h1 class="weather-item1">Your Weather Data</h1>
-            <div class="weather-item">Location: ${location}</div>
-            <div class="weather-item">Wind Speed: ${windSpeed} kmph</div>
-            <div class="weather-item">Humidity: ${humidity}%</div>
-            <div class="weather-item">Time Zone: ${timeZone}</div>
-            <div class="weather-item">Pressure: ${pressure} hPa</div>
-            <div class="weather-item">Wind Direction: ${windDirection}</div>
-            <div class="weather-item">UV Index: ${uvIndex}</div>
-            <div class="weather-item">Feels like: ${temperature} &deg;</div>
-            <div class="weather-item">Description: ${description}</div>
-            <div class="weather-item">Current Time: ${currentTime}</div>
-        `;
-
-        // Show the weather data element
-        weatherDataElement.classList.remove('hidden');
-    } else {
-        console.error("Invalid or unexpected API response format.");
-    }
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const FetchbuttonRef = document.getElementById("button");
+  if (FetchbuttonRef) {
+    FetchbuttonRef.addEventListener("click", () => {
+      window.location.href = "weather.html";
+    });
+  }
+  getLocation();
+});
