@@ -1,0 +1,82 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #360369;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.details {
+    padding: 10px;
+    margin: 10px;
+    color: #ffffff;
+}
+
+p {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+}
+
+#map {
+    padding: 20px;
+    height: 500px;
+}
+
+#locationInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px;
+    padding: 10px;
+    /* Added padding to provide some space */
+}
+
+.location-info-item {
+    background-color: #270846;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: larger;
+    padding: 20px;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+}
+
+#weatherData {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+}
+
+.weather-item {
+    flex: 0 50% 50%;
+    /* Each item takes equal space in the row */
+    background-color: #360369;
+    color: #ffffff;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.weather-item1 {
+    flex: 0 100%;
+    /* Each item takes equal space in the row */
+    color: #360369;
+    padding: 10px;
+
+}
+
+.hidden {
+    display: none;
+}
