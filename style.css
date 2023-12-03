@@ -1,12 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Montserrat:wght@700&family=Roboto&family=Tillana&display=swap");
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+}
+
+.MainPage {
+    background: #360369;
+    width: 100%;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 h1 {
@@ -16,7 +23,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-#fetchDataBtn {
+#button {
     font-family: 'Courier New', Courier, monospace;
     font-weight: 500;
     width: 30%;
@@ -29,9 +36,241 @@ h1 {
     transition: all 0.2s ease-in-out;
 }
 
-#fetchDataBtn:hover {
+#button:hover {
     background-color: #f39c12;
     box-shadow: 0px 6px 7px rgba(0, 0, 0, .2);
     transform: translateY(-3px);
     color: #ffffff;
+}
+
+/*
+? ======================================= BELOW CODES ARE FOR VIEW PAGE ========================================================
+*/
+.MainPage2 {
+    width: 100%;
+    background-color: #360369;
+    color: #ffffff;
+    transition: all .2s ease-in-out;
+}
+
+#MapBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 97%;
+    height: 500px;
+    padding: 20px;
+}
+
+h2 {
+    padding: 20px;
+    font-size: xx-large;
+}
+
+
+#text2 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    padding: 20px;
+    margin-top: -40px;
+}
+
+#text3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    padding: 20px;
+    padding: 20px;
+    margin-top: -40px;
+}
+
+#latgap {
+    padding: 10px;
+    background-color: #270846;
+    border-radius: 10px;
+    line-height: 70px;
+}
+
+#longgap {
+    padding: 10px;
+    background-color: #270846;
+    border-radius: 10px;
+    line-height: 70px;
+}
+
+.location-info-item {
+    background-color: #270846;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: larger;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+
+}
+
+.WeatherDetails {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+#weatherdataText {
+    color: #360369;
+    font-size: 34px;
+    font-weight: 600;
+    padding: 10px;
+}
+
+#box {
+    gap: 10px;
+    display: flex;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 10px;
+    align-items: center;
+    background-color: #fafafa;
+    padding: 10px;
+}
+
+#data {
+    border-radius: 10px;
+    background-color: #360369;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: auto;
+    margin: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .5);
+    padding: 10px;
+    font-size: large;
+}
+
+@media only screen and (min-width: 600px){
+    .MainPage2 {
+        margin-top: -2.5%;
+    }
+}
+
+@media only screen and (max-width: 995px){
+    .MainPage2 {
+        margin-top: -4%;
+    }
+    #MapBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 96%;
+        height: 500px;
+        padding: 20px;
+    }
+}
+
+@media only screen and (max-width: 670px){
+    .MainPage2 {
+        margin-top: -5%;
+    }
+    #MapBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 93%;
+        height: 500px;
+        padding: 20px;
+    }
+}
+
+@media only screen and (max-width: 540px){
+    .MainPage2 {
+        margin-top: -6%;
+    }
+
+    #MapBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 500px;
+        padding: 20px;
+    }
+}
+
+@media only screen and (max-width: 452px){
+    .MainPage2 {
+        margin-top: -7%;
+    }
+}
+
+@media only screen and (max-width: 345px){
+    .MainPage2 {
+        margin-top: -7%;
+    }
+}
+
+@media only screen and (max-width: 390px){
+    .MainPage2 {
+        margin-top: -8%;
+    }
+    #MapBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 86%;
+        height: 500px;
+        padding: 20px;
+    }
+}
+
+@media only screen and (max-width: 343px){
+    .MainPage2 {
+        margin-top: -9%;
+    }
+}
+
+@media only screen and (max-width: 307px){
+    .MainPage2 {
+        margin-top: -11%;
+    }
+}
+
+@media only screen and (max-width: 253px){
+    .MainPage2 {
+        margin-top: -13%;
+    }
+
+    #MapBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        height: 500px;
+        padding: 20px;
+    }
+}
+
+@media only screen and (max-width: 220px){
+    .MainPage2 {
+        margin-top: -15%;
+    }
+}
+
+@media only screen and (max-width: 190px){
+    .MainPage2 {
+        margin-top: -20%;
+    }
+
+    #MapBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 75%;
+        height: 500px;
+        padding: 20px;
+    }
 }
