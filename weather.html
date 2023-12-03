@@ -2,23 +2,28 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Application</title>
-    <link rel="stylesheet" href="weather.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <div class="details">
-        <h1>Welcome To The Wreather App</h1>
-        <p>Here is your current location</p>
+    <div class="MainPage2">
+        <h2>Welcome To The Weather App</h2>
+        <p id="text2">Here is your current location</p>
+
+        <div id="text3"></div>
+
+        <iframe id="MapBox" src="" width="100%" height="500" frameborder="0" scrolling="no" marginheight="0"
+            marginwidth="0"></iframe>
     </div>
-    <div id="locationInfo" class="hidden">
-        <div id="latitude" class="location-info-item"></div>
-        <div id="longitude" class="location-info-item"></div>
+    <div class="WeatherDetails">
+        <div id="weatherdataText">Your Weather Data</div>
+        <div id="box">
+
+        </div>
     </div>
-    <div id="map"></div>
-    <div id="weatherData"></div>
     <script src="script.js"></script>
 </body>
 
